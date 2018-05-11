@@ -34,6 +34,7 @@ var AppMain = function (_React$Component) {
       var _this2 = this;
 
       var numberPressed = e.target.innerHTML;
+      console.log(this.state.currentOperation);
       switch (this.state.currentOperation) {
         case document.getElementById('plus').innerHTML:
           this.setState(function (prevState) {
@@ -77,12 +78,14 @@ var AppMain = function (_React$Component) {
           });
           break;
         default:
+          this.state.currentOperation == '' && this.setState(function () {
+            return { answer: 0, answerOnScreen: 0 };
+          });
           this.setState(function (prevState) {
             var toCalc = +(prevState.number + numberPressed).replace(/\s/g, '');
-            var tempAns = +(toCalc + 0);
             return {
-              number: _this2.state.currentOperation == '' ? toCalc : 0,
-              answerOnScreen: tempAns,
+              number: toCalc,
+              answerOnScreen: toCalc,
               currentOperation: _this2.state.currentOperation == '' && document.getElementById('plus').innerHTML
             };
           });
@@ -94,12 +97,12 @@ var AppMain = function (_React$Component) {
       var _this3 = this;
 
       var currentOperation = e.target.innerHTML;
-      this.setState(function (prevState) {
+      this.setState(function () {
         return { currentOperation: currentOperation };
       });
       switch (this.state.currentOperation) {
         case document.getElementById('plus').innerHTML:
-          this.setState(function (prevState) {
+          this.setState(function () {
             return {
               answer: +_this3.state.answer + +_this3.state.number,
               number: 0
@@ -107,7 +110,7 @@ var AppMain = function (_React$Component) {
           });
           break;
         case document.getElementById('minus').innerHTML:
-          this.setState(function (prevState) {
+          this.setState(function () {
             return {
               answer: +_this3.state.answer - +_this3.state.number,
               number: 0
@@ -115,7 +118,7 @@ var AppMain = function (_React$Component) {
           });
           break;
         case document.getElementById('times').innerHTML:
-          this.setState(function (prevState) {
+          this.setState(function () {
             return {
               answer: +_this3.state.answer * +_this3.state.number,
               number: 0
@@ -130,13 +133,13 @@ var AppMain = function (_React$Component) {
             };
           });
           break;
-        default:
-          this.setState(function (prevState) {
+        case document.getElementById('equals').innerHTML:
+          this.setState(function () {
             return {
               answer: 0,
               number: 0,
               tempAns: 0,
-              answerOnScreen: 0
+              currentOperation: ''
             };
           });
       }

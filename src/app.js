@@ -14,6 +14,7 @@ class AppMain extends React.Component {
 
   numberPressed(e) {
     const numberPressed = e.target.innerHTML;
+    console.log(this.state.currentOperation);
       switch (this.state.currentOperation) {
         case document.getElementById('plus').innerHTML:
           this.setState((prevState) => {
@@ -57,12 +58,12 @@ class AppMain extends React.Component {
           });
           break;
         default:
+        this.state.currentOperation == '' &&  this.setState(() => ({ answer: 0, answerOnScreen: 0 }));
         this.setState((prevState) => {
           const toCalc = +(prevState.number + numberPressed).replace(/\s/g,'');
-          const tempAns = +(toCalc + 0)
           return {
-            number: this.state.currentOperation == '' ? toCalc : 0,
-            answerOnScreen: tempAns,
+            number: toCalc,
+            answerOnScreen: toCalc,
             currentOperation: this.state.currentOperation == '' &&  document.getElementById('plus').innerHTML
           }
         });
@@ -71,10 +72,10 @@ class AppMain extends React.Component {
 
   functionPressed(e) {
     let currentOperation = e.target.innerHTML;
-    this.setState((prevState) => ({ currentOperation }));
+    this.setState(() => ({ currentOperation }));
         switch (this.state.currentOperation) {
           case document.getElementById('plus').innerHTML:
-            this.setState((prevState) => {
+            this.setState(() => {
               return {
                 answer: +this.state.answer + +this.state.number,
                 number: 0
@@ -82,7 +83,7 @@ class AppMain extends React.Component {
             });
             break;
           case document.getElementById('minus').innerHTML:
-            this.setState((prevState) => {
+            this.setState(() => {
               return {
                 answer: +this.state.answer - +this.state.number,
                 number: 0
@@ -90,7 +91,7 @@ class AppMain extends React.Component {
             });
             break;
           case document.getElementById('times').innerHTML:
-            this.setState((prevState) => {
+            this.setState(() => {
               return {
                 answer: +this.state.answer * +this.state.number,
                 number: 0
@@ -105,13 +106,13 @@ class AppMain extends React.Component {
               }
             });
             break;
-          default:
-           this.setState((prevState) => {
+          case document.getElementById('equals').innerHTML:
+           this.setState(() => {
              return {
                answer: 0,
                number: 0,
                tempAns: 0,
-               answerOnScreen: 0
+               currentOperation: ''
              }
            });
        }
