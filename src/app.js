@@ -3,12 +3,11 @@ class AppMain extends React.Component {
     super(props);
     this.numberPressed = this.numberPressed.bind(this);
     this.functionPressed = this.functionPressed.bind(this);
-
     this.state = {
       answer: 0,
       number: 0,
       tempAns: 0,
-      currentOperation: '=',
+      currentOperation: '',
       answerOnScreen: 0
     }
   }
@@ -20,6 +19,7 @@ class AppMain extends React.Component {
           this.setState((prevState) => {
             const toCalc = +(prevState.number + numberPressed).replace(/\s/g,'');
             const tempAns = +(toCalc + +this.state.answer);
+
             return {
               number: toCalc,
               answerOnScreen: tempAns
@@ -56,6 +56,16 @@ class AppMain extends React.Component {
             }
           });
           break;
+        default:
+        this.setState((prevState) => {
+          const toCalc = +(prevState.number + numberPressed).replace(/\s/g,'');
+          const tempAns = +(toCalc + 0)
+          return {
+            number: this.state.currentOperation == '' ? toCalc : 0,
+            answerOnScreen: tempAns,
+            currentOperation: this.state.currentOperation == '' &&  document.getElementById('plus').innerHTML
+          }
+        });
       }
   }
 
@@ -95,8 +105,17 @@ class AppMain extends React.Component {
               }
             });
             break;
-          }
-  }
+          default:
+           this.setState((prevState) => {
+             return {
+               answer: 0,
+               number: 0,
+               tempAns: 0,
+               answerOnScreen: 0
+             }
+           });
+       }
+      }
   render() {
     return(
       <div>
@@ -180,6 +199,7 @@ class Functions extends React.Component {
     super(props);
     this.functionPressed = this.functionPressed.bind(this);
   }
+
   functionPressed(e) {
     this.props.functionPressed(e);
   }

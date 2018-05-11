@@ -18,12 +18,11 @@ var AppMain = function (_React$Component) {
 
     _this.numberPressed = _this.numberPressed.bind(_this);
     _this.functionPressed = _this.functionPressed.bind(_this);
-
     _this.state = {
       answer: 0,
       number: 0,
       tempAns: 0,
-      currentOperation: '=',
+      currentOperation: '',
       answerOnScreen: 0
     };
     return _this;
@@ -40,6 +39,7 @@ var AppMain = function (_React$Component) {
           this.setState(function (prevState) {
             var toCalc = +(prevState.number + numberPressed).replace(/\s/g, '');
             var tempAns = +(toCalc + +_this2.state.answer);
+
             return {
               number: toCalc,
               answerOnScreen: tempAns
@@ -76,6 +76,16 @@ var AppMain = function (_React$Component) {
             };
           });
           break;
+        default:
+          this.setState(function (prevState) {
+            var toCalc = +(prevState.number + numberPressed).replace(/\s/g, '');
+            var tempAns = +(toCalc + 0);
+            return {
+              number: _this2.state.currentOperation == '' ? toCalc : 0,
+              answerOnScreen: tempAns,
+              currentOperation: _this2.state.currentOperation == '' && document.getElementById('plus').innerHTML
+            };
+          });
       }
     }
   }, {
@@ -120,6 +130,15 @@ var AppMain = function (_React$Component) {
             };
           });
           break;
+        default:
+          this.setState(function (prevState) {
+            return {
+              answer: 0,
+              number: 0,
+              tempAns: 0,
+              answerOnScreen: 0
+            };
+          });
       }
     }
   }, {
